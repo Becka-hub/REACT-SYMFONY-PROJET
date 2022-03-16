@@ -8,7 +8,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
@@ -51,6 +50,9 @@ class ApiController extends AbstractController
     public function afficheProduitDetails($id,ProduitRepository $produitRepository): Response
     {
         $produit = $produitRepository->find($id);
+        if(!$produit){
+            return $this->json(['status'=>false,'title'=>"Error"],400);
+        }
         return $this->json(['status'=>true,'title'=>"Success",'Donner'=>$produit],200);
     }
 
